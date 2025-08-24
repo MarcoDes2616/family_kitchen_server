@@ -1,11 +1,10 @@
 const catchError = require("../utils/catchError");
 const { generateRecipe } = require("../services/geminiService");
 const Recipe = require("../models/Recipe");
-// Controlador para solicitar una nueva receta
 
-const requestRecipe = async (req, res) => {
-  try {
-    const { ingredients, familyId } = req.body;
+
+const requestRecipe = catchError(async (req, res) => {
+  const { ingredients, familyId } = req.body;
 
     // Verifica que los ingredientes y el ID de la familia existan
     if (!ingredients || !familyId) {
@@ -33,15 +32,6 @@ const requestRecipe = async (req, res) => {
       message: "Receta generada y guardada exitosamente.",
       recipe: generatedRecipe,
     });
-  } catch (error) {
-    console.error("Error en el controlador de recetas:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const getAll = catchError(async (req, res) => {
-  const results = await Recipe.findAll();
-  return res.json(results);
 });
 
 const create = catchError(async (req, res) => {
@@ -73,10 +63,5 @@ const update = catchError(async (req, res) => {
 });
 
 module.exports = {
-  getAll,
-  create,
-  getOne,
-  remove,
-  update,
   requestRecipe,
 };
