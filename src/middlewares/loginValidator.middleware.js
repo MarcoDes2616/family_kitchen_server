@@ -1,4 +1,4 @@
-const Users = require("../models/Users");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const catchError = require("../utils/catchError");
@@ -6,7 +6,7 @@ const catchError = require("../utils/catchError");
 const loginValidator = catchError(async (req, res, next) => {
     const { email, login_token } = req.body;
 
-    const user = await Users.findOne({
+    const user = await User.findOne({
         where: {
             email,
             token_expires: { [Op.gt]: new Date() },
