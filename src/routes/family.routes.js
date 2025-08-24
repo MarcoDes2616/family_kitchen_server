@@ -1,4 +1,4 @@
-const { getAll, create, getOne, remove, update } = require('../controllers/family.controller');
+const { getAll, create, getOne, remove, update } = require('../controllers/Family.controller');
 const express = require('express');
 
 const familyRouter = express.Router();

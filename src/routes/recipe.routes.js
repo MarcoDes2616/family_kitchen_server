@@ -1,15 +1,14 @@
-const { getAll, create, getOne, remove, update } = require('../controllers/recipe.controller');
+const { requestRecipe } = require('../controllers/Recipe.controller');
 const express = require('express');
 
 const recipeRouter = express.Router();
 
-recipeRouter.route('')
-    .get(getAll)
-    .post(create);
+recipeRouter.route('/request')
+    .post(requestRecipe);
 
-recipeRouter.route('/:id')
-    .get(getOne)
-    .delete(remove)
-    .put(update);
+// recipeRouter.route('/:id')
+//     .get(getOne)
+//     .delete(remove)
+//     .put(update);
 
 module.exports = recipeRouter;
