@@ -3,7 +3,7 @@ require("dotenv").config();
 const promptSystem = require("../utils/promptSystem");
 
 const openai = new OpenAI({
-        baseURL: 'https://api.deepseek.com',
+        baseURL: process.env.AI_API_URL,
         apiKey: process.env.AI_API_KEY
 });
 
