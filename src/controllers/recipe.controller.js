@@ -12,7 +12,7 @@ const requestRecipe = catchError(async (req, res) => {
         .status(400)
         .json({ message: "Ingredientes y ID de la familia son requeridos." });
     }
-
+    
     // 1. Llama a la función de Gemini para generar la receta
     const generatedRecipe = await aiGeneration(ingredients);
 
