@@ -11,7 +11,7 @@ async function aiGeneration(prompt) {
   const completion = await openai.chat.completions.create({
     messages: [{ role: "system", content: promptSystem }, 
                 { role: "user", content: prompt }],
-    model: "deepseek-chat",
+    model: process.env.AI_MODEL_LOCAL,
   });
   console.log(completion);
   return completion.choices[0].message.content
