@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+const OpenAI = require("openai");
 require("dotenv").config();
 
 const openai = new OpenAI({
@@ -8,11 +8,11 @@ const openai = new OpenAI({
 
 async function aiGeneration() {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: "You are a helpful assistant." }],
+    messages: [{ role: "system", content: "Tu eres un poderoso asistente" }],
     model: "deepseek-chat",
   });
 
-  console.log(completion.choices[0].message.content);
+  return completion.choices[0].message.content
 }
 
 module.exports = { aiGeneration };

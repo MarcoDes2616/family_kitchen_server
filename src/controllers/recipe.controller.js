@@ -1,5 +1,5 @@
 const catchError = require("../utils/catchError");
-const { generateRecipe } = require("../services/geminiService");
+const { aiGeneration } = require("../services/aiServices");
 const Recipe = require("../models/Recipe");
 
 
@@ -14,7 +14,7 @@ const requestRecipe = catchError(async (req, res) => {
     }
 
     // 1. Llama a la función de Gemini para generar la receta
-    const generatedRecipe = await generateRecipe(ingredients);
+    const generatedRecipe = await aiGeneration(ingredients);
 
     // // 2. Guarda la receta en tu base de datos
     // const newRecipe = await Recipe.create({
