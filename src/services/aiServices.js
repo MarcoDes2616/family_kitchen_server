@@ -3,8 +3,8 @@ require("dotenv").config();
 const promptSystem = require("../utils/promptSystem");
 
 const openai = new OpenAI({
-        baseURL: process.env.AI_API_URL,
-        apiKey: process.env.AI_API_KEY
+        baseURL: process.env.AI_API_URL_LOCAL,
+        apiKey: process.env.AI_API_KEY_LOCAL,
 });
 
 async function aiGeneration(prompt) {
