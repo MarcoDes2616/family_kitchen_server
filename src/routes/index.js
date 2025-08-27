@@ -8,7 +8,7 @@ const router = express.Router();
 // colocar las rutas aquí
 // router.use("/families", familyRouter);
 // router.use("/system", systemRouter);
-// router.use("/users", userRouter);
+router.use("/users", userRouter);
 router.use("/recipes", recipeRouter)
 
 

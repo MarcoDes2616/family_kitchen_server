@@ -2,6 +2,7 @@ const User = require("./User");
 const Family = require("./Family");
 const Recipe = require("./Recipe");
 const Vote = require("./Vote");
+const TokenAdministration = require("./TokenAdministration");
 
 const initModels = () => {
   // Family 1 ---- * Users
@@ -27,6 +28,11 @@ const initModels = () => {
 
   Recipe.hasMany(Vote, { foreignKey: "recipe_id" });
   Vote.belongsTo(Recipe, { foreignKey: "recipe_id" });
+
+  // User 1 ---- 1 TokenAdministration
+  User.hasOne(TokenAdministration, { foreignKey: "user_id" });
+  TokenAdministration.belongsTo(User, { foreignKey: "user_id" });
+
 };
 
 module.exports = initModels;

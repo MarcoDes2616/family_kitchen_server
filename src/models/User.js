@@ -11,7 +11,7 @@ const User = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
       validate: {
         isEmail: true,
@@ -45,7 +45,6 @@ User.prototype.toJSON = function () {
   delete values.last_login;
   delete values.login_token;
   delete values.token_expires;
-  delete values.pushToken;
   return values;
 };
 
