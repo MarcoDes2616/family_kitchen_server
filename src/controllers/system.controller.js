@@ -7,14 +7,10 @@ const { Op } = require("sequelize");
 const { sendPushNotification } = require("../utils/notificationService");
 const signUserToken = require("../utils/signToken");
 
-
-
 // New Endpoint to check device
 const checkDevice = catchError(async (req, res) => {
   const { id:device_id } = req.params;
 
-  console.log("Received device_id:", device_id);
-  
   if (!device_id) {
     return res.status(400).json({
       success: false,
