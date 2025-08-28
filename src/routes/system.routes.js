@@ -5,7 +5,8 @@ const {
   savePushToken,
   sendCustomNotification,
   deletePushToken,
-  logout
+  logout,
+  checkDevice
 } = require("../controllers/system.controller");
 const express = require("express");
 const verifyJWT = require("../middlewares/auth.middleware");
@@ -14,20 +15,22 @@ const loginValidator = require("../middlewares/loginValidator.middleware");
 
 const systemRouter = express.Router();
 
-systemRouter.route("/login").post(loginValidator, login);
+systemRouter.get("/check_device/:id", checkDevice);
 
-systemRouter.route("/request_auth_token").post(sendAuthTokenController);
+// systemRouter.route("/login").post(loginValidator, login);
 
-systemRouter.route("/me").get(verifyJWT, getMe);
+// systemRouter.route("/request_auth_token").post(sendAuthTokenController);
 
-systemRouter.route("/save-push-token").post(savePushToken);
+// systemRouter.route("/me").get(verifyJWT, getMe);
 
-systemRouter.route("/delete-push-token").post(verifyJWT, deletePushToken);
+// systemRouter.route("/save-push-token").post(savePushToken);
 
-systemRouter.route("/logout").post(verifyJWT, logout)
+// systemRouter.route("/delete-push-token").post(verifyJWT, deletePushToken);
 
-systemRouter
-  .route("/send-custom-notification")
-  .post(verifyJWT, isAdmin, sendCustomNotification);
+// systemRouter.route("/logout").post(verifyJWT, logout)
+
+// systemRouter
+//   .route("/send-custom-notification")
+//   .post(verifyJWT, isAdmin, sendCustomNotification);
 
 module.exports = systemRouter;

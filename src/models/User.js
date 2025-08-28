@@ -33,6 +33,11 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    device_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
   },
   {
     tableName: "users",

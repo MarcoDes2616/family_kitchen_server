@@ -7,6 +7,41 @@ const { Op } = require("sequelize");
 const { sendPushNotification } = require("../utils/notificationService");
 const signUserToken = require("../utils/signToken");
 
+
+
+// New Endpoint to check device
+const checkDevice = catchError(async (req, res) => {
+  const { id:device_id } = req.params;
+
+  console.log("Received device_id:", device_id);
+  
+  if (!device_id) {
+    return res.status(400).json({
+      success: false,
+      message: "El ID del dispositivo es obligatorio",
+    });
+  }
+  const user = await User.findOne({
+    where: {
+      device_id,
+    },
+  });
+  if (user) {
+    return res.status(200).json({
+      success: true,
+      message: "Dispositivo reconocido",
+      user: user,
+    });
+  } else {
+    return res.status(200).json({
+      success: false,
+      message: "Dispositivo no reconocido",
+      user: null,
+    });
+  }
+});
+
+
 //ENDPOINT SYSTEM 1 -- SOLICITUD DE TOKEN POR EMAIL
 const sendAuthTokenController = async (req, res) => {
   const { email } = req.body;
@@ -182,5 +217,6 @@ module.exports = {
   savePushToken,
   sendCustomNotification,
   deletePushToken,
-  logout
+  logout,
+  checkDevice
 };
