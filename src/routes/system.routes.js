@@ -6,7 +6,8 @@ const {
   sendCustomNotification,
   deletePushToken,
   logout,
-  checkDevice
+  checkDevice,
+  registerUser
 } = require("../controllers/system.controller");
 const express = require("express");
 const verifyJWT = require("../middlewares/auth.middleware");
@@ -17,7 +18,9 @@ const systemRouter = express.Router();
 
 systemRouter.get("/check_device/:id", checkDevice);
 
-// systemRouter.route("/login").post(loginValidator, login);
+systemRouter.post("/register_user", registerUser)
+
+systemRouter.route("/login").post(loginValidator, login);
 
 // systemRouter.route("/request_auth_token").post(sendAuthTokenController);
 

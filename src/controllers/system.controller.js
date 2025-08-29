@@ -37,6 +37,60 @@ const checkDevice = catchError(async (req, res) => {
   }
 });
 
+const registerUser = catchError(async (req, res) => {
+    const { email, username, device_id } = req.body;
+
+    if (!email || !username || !device_id) {
+      return res.status(400).json({
+        success: false,
+        message: "Faltan datos: email, username o device_id",
+      });
+    }
+
+    let user = await User.findOne({
+      where: { email },
+    });
+
+    let login_token, newUser;
+
+    if (!user) {
+      login_token = crypto.randomBytes(3).toString("hex").toUpperCase();
+      let token_expires = new Date(Date.now() + 30 * 60 * 1000); // 30 min
+      let active_session = false;
+      newUser = await User.create({
+        email,
+        username,
+        device_id,
+        login_token,
+        token_expires,
+        active_session
+      });
+      console.log(user);
+    }
+
+    await sendEmail({
+      to: newUser.email,
+      subject: "Tu token de acceso",
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">Token de acceso</h2>
+          <p>Utiliza el siguiente código para completar tu registro:</p>
+
+          <div style="background: #f4f4f4; padding: 15px; border-radius: 5px; text-align: center; margin: 20px 0;">
+            <strong style="font-size: 24px; letter-spacing: 3px; color: #000; font-weight: bold;">${login_token}</strong>
+          </div>
+
+          <p>Este código es válido por <strong>30 minutos</strong>.</p>
+          <p style="font-size: 12px; color: #777;">Si no solicitaste este token, ignora este mensaje.</p>
+        </div>
+      `,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Si el email está registrado, recibirás un token de acceso",
+    });
+});
 
 //ENDPOINT SYSTEM 1 -- SOLICITUD DE TOKEN POR EMAIL
 const sendAuthTokenController = async (req, res) => {
@@ -214,5 +268,6 @@ module.exports = {
   sendCustomNotification,
   deletePushToken,
   logout,
-  checkDevice
+  checkDevice,
+  registerUser
 };

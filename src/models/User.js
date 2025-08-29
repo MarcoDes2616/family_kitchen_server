@@ -11,11 +11,8 @@ const User = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
     },
     login_token: {
       type: DataTypes.STRING,
@@ -38,6 +35,11 @@ const User = sequelize.define(
       allowNull: false,
       unique: true,
     },
+    active_session: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    }
   },
   {
     tableName: "users",
@@ -54,6 +56,8 @@ User.prototype.toJSON = function () {
 };
 
 User.beforeSave(async (user) => {
+  console.log(user);
+  
   const { login_token } = user.dataValues;
 
   const hashedPassword = await bcrypt.hash(login_token, 10);
